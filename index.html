@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悠然地</title>
+    <link rel="shortcut icon" href="https://s21.ax1x.com/2025/09/03/pVgdDDe.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #a29bfe;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --dark-color: #2d3436;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --bg-url: url('https://bing.img.run/rand.php');
+        }
+
+        body {
+            background: var(--bg-url) no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            z-index: -1;
+        }
+
+        /* 主容器 */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* 个人信息区域 */
+        .profile {
+            text-align: center;
+            margin-bottom: 0;
+            padding: 1rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        .profile h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .profile p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        /* 每日一言区域 */
+        .daily-quote {
+            background: var(--quote-bg);
+            color: var(--text-color);
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+
+        }
+
+        .daily-quote p {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .daily-quote .author {
+            font-size: 0.95rem;
+            color: #07E6E6;
+            font-weight: 500;
+        }
+
+        .quote-loading {
+            color: #07E6E6;
+            font-style: italic;
+        }
+
+        /* 导航链接区域 */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 3rem;
+        }
+
+        .nav-card {
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-color);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            height: 130px;
+            justify-content: center;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-card i {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover i {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .nav-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-card p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* 页脚区域 */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+
+            border-radius: 15px;
+            max-width: 1000px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .beian {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .beian a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .beian a:hover {
+            text-decoration: underline;
+            color: #fd79a8;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .profile h1 {
+                font-size: 2.2rem;
+            }
+            
+            .profile p {
+                font-size: 1.1rem;
+            }
+            
+            .daily-quote p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .profile h1 {
+                font-size: 1.8rem;
+            }
+            
+            .profile p {
+                font-size: 1rem;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .nav-card {
+                height: 110px;
+                padding: 1rem;
+            }
+            
+            .daily-quote p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 个人信息区域 -->
+        <div class="profile">
+            <img src="https://s21.ax1x.com/2025/09/12/pVWdgSI.jpg" alt="个人头像" class="avatar">
+            <h1>DJuncn</h1>
+            <p>过客匆匆 · 浪迹徐徐</p>
+        </div>
+
+        <!-- 每日一言区域 -->
+        <div class="daily-quote">
+            <p id="quote-text" class="quote-loading">正在加载每日一言...</p>
+            <div class="author" id="quote-author"></div>
+        </div>
+
+        <!-- 导航链接区域 -->
+        <div class="nav-grid">
+            <a href="/" class="nav-card">
+                <i class="fas fa-home"></i>
+                <h3>首页</h3>
+                <p>返回主页面</p>
+            </a>
+            
+            <a href="https://blog.yourande.cn" class="nav-card">
+                <i class="fas fa-blog"></i>
+                <h3>个人博客</h3>
+                <p>我的思考与创作</p>
+            </a>
+            
+            <a href="https://cloud.yourande.cn" class="nav-card">
+                <i class="fas fa-cloud"></i>
+                <h3>私人网盘</h3>
+                <p>文件存储与分享</p>
+            </a>
+            
+            <a href="https://bk.yourande.cn" class="nav-card">
+                <i class="fas fa-bookmark"></i>
+                <h3>书签</h3>
+                <p>常用网站收藏</p>
+            </a>
+        </div>
+
+        <!-- 页脚区域 -->
+        <footer>
+            <div class="footer-content">
+                <div class="beian">
+                    <!-- 在这里替换为您的备案信息 -->
+                    <a href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2025139853号-1</a>
+                    |
+                    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502045678" target="_blank"></a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- 配置说明区域
+        <div class="config-note">
+            <h3>配置说明</h3>
+            <ul>
+                <li>修改背景：在CSS的<code>:root</code>部分找到<code>--bg-url</code>变量，替换为您喜欢的图片URL</li>
+                <li>修改每日一言API：在JavaScript部分找到<code>quoteAPI</code>变量，替换为您喜欢的API地址</li>
+                <li>修改页脚信息：直接在footer部分修改相应的文字和链接</li>
+                <li>修改导航卡片：在nav-grid部分修改或添加导航卡片</li>
+            </ul>
+        </div>  -->
+    </div>
+
+    <script>
+        // 配置部分 - 您可以修改这些变量
+        const quoteAPI = 'https://v1.hitokoto.cn/?c=a'; // 每日一言API，可以替换为您喜欢的API
+        const fallbackQuotes = [
+            { text: "人生的价值，并不是用时间，而是用深度去衡量的。", author: "列夫·托尔斯泰" },
+            { text: "生活就像骑自行车，为了保持平衡，必须不断前进。", author: "阿尔伯特·爱因斯坦" },
+            { text: "只有经历过地狱般的磨砺，才能练就创造天堂的力量。", author: "泰戈尔" },
+            { text: "黑夜无论怎样漫长，白昼总会到来。", author: "莎士比亚" },
+            { text: "世界上最宽阔的是海洋，比海洋更宽阔的是天空，比天空更宽阔的是人的胸怀。", author: "雨果" }
+        ];
+
+        // 获取每日一言
+        async function fetchDailyQuote() {
+            try {
+                const response = await fetch(quoteAPI);
+                if (!response.ok) throw new Error('API请求失败');
+                
+                const data = await response.json();
+                
+                // 根据API响应结构调整这些行
+                document.getElementById('quote-text').textContent = data.hitokoto || data.text;
+                document.getElementById('quote-author').textContent = "— " + (data.from || data.author || "未知");
+            } catch (error) {
+                console.error("获取每日一言失败:", error);
+                // 使用备用名言
+                showRandomQuote();
+            }
+        }
+
+        // 显示随机名言（备用）
+        function showRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
+            const quote = fallbackQuotes[randomIndex];
+            document.getElementById('quote-text').textContent = quote.text;
+            document.getElementById('quote-author').textContent = "— " + quote.author;
+        }
+
+        // 页面加载时获取每日一言
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchDailyQuote();
+            
+            // 添加卡片悬停动画效果
+            const cards = document.querySelectorAll('.nav-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-12px) scale(1.03)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            // 点击每日一言区域可以刷新名言
+            document.querySelector('.daily-quote').addEventListener('click', fetchDailyQuote);
+        });
+
+        // 点击头像也可以重新获取名言
+        document.querySelector('.avatar').addEventListener('click', fetchDailyQuote);
+    </script>
+</body>
+</html>
